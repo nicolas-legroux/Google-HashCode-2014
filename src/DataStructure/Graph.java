@@ -48,7 +48,7 @@ public class Graph {
 				split = line.split(" ");
 				float lat = Float.parseFloat(split[0]);
 				float lng = Float.parseFloat(split[1]);
-				Vertex v = new Vertex(lat, lng);
+				Vertex v = new Vertex(lat, lng, i);
 				vertices.put(new Integer(i), v);				
 			}
 			
