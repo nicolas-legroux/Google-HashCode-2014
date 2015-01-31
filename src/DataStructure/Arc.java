@@ -13,19 +13,14 @@ public class Arc {
 	
 	boolean visited;
 	
-	public Arc(Vertex start, Vertex end, int distance, int duration, boolean bidirectionnel) {
+	public Arc(Vertex start, Vertex end, int distance, int duration) {
 		this.start = start;
 		this.end = end;
 		this.distance = distance;
 		realdistance = distance;
 		this.duration = duration;
 		returnArc = null;
-	}
-	
-	public Arc(Vertex start, Vertex end, int distance, int duration, boolean bidirectionnel, Arc returnArc) {
-		this(start, end, distance, duration, bidirectionnel);
-		returnArc = null;
-	}
+	}	
 	
 	public void setReturnArc(Arc returnArc) {
 		this.returnArc = returnArc;
