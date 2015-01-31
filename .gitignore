@@ -5,3 +5,5 @@
 .settings
 /Debug/
 /bin/
+output.gpx
+output.txt
