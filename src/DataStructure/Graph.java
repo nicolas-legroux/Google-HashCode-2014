@@ -85,13 +85,13 @@ public class Graph {
 					returnArc.setReturnArc(arc);
 				}
 				
-				//Add the arc to the outgoing arcs of the starting vertex
-				start.addOutgoingArc(arc);				
-				if(bidirectionnal){
-					end.addOutgoingArc(returnArc);					
-				}
-				
+				//Add the arc to the outgoing arcs of the starting vertex and to the set of arcs
+				start.addOutgoingArc(arc);
 				arcs.add(arc);
+				if(bidirectionnal){
+					end.addOutgoingArc(returnArc);	
+					arcs.add(returnArc);
+				}				
 			}			
 		}		
 		
@@ -104,8 +104,7 @@ public class Graph {
 	public void resetAllDistance() {
 		for(Arc arc : arcs)
 			arc.resetDistance();
-	}
-	
+	}	
 	
 	public Vertex getRoot() {
 		return root;

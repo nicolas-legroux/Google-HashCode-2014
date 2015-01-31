@@ -69,8 +69,10 @@ public class Arc {
 			distance = 0;
 			numberOfVisits++;
 		}
-		else
+		else{
 			distance = realDistance;
+			numberOfVisits = 0;
+		}
 		
 		if(changeReturn && returnArc != null)
 			returnArc.setVisited(visited, false);
