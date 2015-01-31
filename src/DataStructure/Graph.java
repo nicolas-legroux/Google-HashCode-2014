@@ -2,6 +2,8 @@ package DataStructure;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
@@ -14,9 +16,10 @@ public class Graph {
 	private int maxTimeAllowed;
 	private int numberOfCars;
 	private int completeLength;
+	private List<Arc> arcs;
 	
 	public Graph() {
-
+		arcs = new LinkedList<Arc>();
 	}
 	
 	public void buildFromFile(String path) {
@@ -87,6 +90,8 @@ public class Graph {
 				if(bidirectionnal){
 					end.addOutgoingArc(returnArc);					
 				}
+				
+				arcs.add(arc);
 			}			
 		}		
 		
@@ -94,6 +99,11 @@ public class Graph {
 		root = vertices.get(new Integer(intOfRoot));	
 		
 		completeLength = completeDistance;
+	}
+	
+	public void resetAllDistance() {
+		for(Arc arc : arcs)
+			arc.resetDistance();
 	}
 	
 	

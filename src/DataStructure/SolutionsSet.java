@@ -18,6 +18,15 @@ public class SolutionsSet {
 		solutions.add(s);
 	}
 	
+	public int getTotalScore() {
+		int total = 0;
+		
+		for(Solution s : solutions)
+			total += s.getTotalDistance();
+		
+		return total;
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {
