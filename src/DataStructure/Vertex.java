@@ -7,20 +7,20 @@ public class Vertex {
 
 	private float lat;
 	private float lng;
-	private List<Arc> arcs;
+	
+	private List<Arc> outgoingArcs;
 	
 	public Vertex(float lat, float lng) {
 		this.lat = lat;
 		this.lng = lng;
-		this.arcs = new LinkedList<Arc>();
+		this.outgoingArcs = new LinkedList<Arc>();
 	}
 	
-	public void addArc(Arc arc) {
-		arcs.add(arc);
+	public void addOutgoingArc(Arc arc) {
+		outgoingArcs.add(arc);
 	}
 	
-	public List<Arc> getArcs() {
-		return arcs;
-		
+	public List<Arc> getOutgoingArcs() {
+		return outgoingArcs;
 	}
 }
