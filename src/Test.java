@@ -1,3 +1,4 @@
+import solver.Greedy;
 import DataStructure.*;
 
 
@@ -12,7 +13,11 @@ public class Test {
 		System.out.println("The graph has " + g.getNumberOfArcs() + " arcs.");
 		System.out.println("The MaxTime is " + g.getMaxTimeAllowed() + ".");
 		System.out.println("The number of cars is " + g.getNumberOfCars() + ".");		
-		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");	
+		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");
+		
+		Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), g.getNumberOfCars());
+		greedy.compute();
+		
 	}
 
 }

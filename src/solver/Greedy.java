@@ -38,10 +38,14 @@ public class Greedy {
 			Solution solution = new Solution(graph.getRoot());
 			Vertex current = graph.getRoot();
 			
-			while(solution.getTotalTime() <= maxTime) {
+			
+			while(true) {
 				currentOutgoing = current.getOutgoingArcs();
 				Collections.sort(currentOutgoing, comparator);
 				arc = currentOutgoing.get(0);
+				
+				if(solution.getTotalTime() + arc.getDuration() >= maxTime) 
+					break;
 				
 				solution.addVertex(arc, arc.getEnd());
 				arc.setVisited(true);
@@ -49,9 +53,14 @@ public class Greedy {
 			}
 			
 			System.out.println("Done vehicule " + i);
+			System.out.println("Score vehicule " + i + ": " + solution.getTotalDistance());
 			
 			set.addSolution(solution);
 		}
+		
+		set.writeToFile();
 	}
+	
+	
 
 }

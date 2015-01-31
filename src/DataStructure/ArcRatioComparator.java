@@ -9,7 +9,7 @@ public class ArcRatioComparator implements Comparator<Arc> {
 		float r1 = o1.getDistance()/o1.getDuration();
 		float r2 = o2.getDistance()/o2.getDuration();
 		
-		return (int)(r1 - r2);
+		return (int)(r2 - r1);
 	}
 
 }
