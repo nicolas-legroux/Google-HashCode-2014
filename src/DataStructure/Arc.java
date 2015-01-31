@@ -6,24 +6,33 @@ public class Arc {
 	private Vertex end;
 	
 	private int distance;
-	private int realdistance;
+	private int realDistance;
 	private int duration;
 	
 	private Arc returnArc;
 	
-	boolean visited;
+	private boolean visited;
 	
 	public Arc(Vertex start, Vertex end, int distance, int duration) {
 		this.start = start;
 		this.end = end;
 		this.distance = distance;
-		realdistance = distance;
+		this.realDistance = distance;
 		this.duration = duration;
-		returnArc = null;
+		this.returnArc = null;
+		this.visited = false;
 	}	
 	
 	public void setReturnArc(Arc returnArc) {
 		this.returnArc = returnArc;
+	}
+	
+	public Vertex getStart(){
+		return start;
+	}
+	
+	public Vertex getEnd() {
+		return end;
 	}
 	
 	public int getDistance() {
@@ -33,31 +42,23 @@ public class Arc {
 	public int getDuration() {
 		return duration;
 	}
-
-	public void setVisited(boolean visited) {
-		this.visited = visited;
-		if(visited)
-			distance = 0;
-		else
-			distance = realdistance;
-	}
-	
-	public void setVisited(boolean visited, boolean changeReturn) {
-		this.visited = visited;
-		if(visited)
-			distance = 0;
-		else
-			distance = realdistance;
-		
-		if(changeReturn && returnArc != null)
-			returnArc.setVisited(visited, false);
-	}
 	
 	public boolean getVisited() {
 		return visited;
 	}
+
+	public void setVisited(boolean visited) {
+		setVisited(visited, true);
+	}
 	
-	public Vertex getEnd() {
-		return end;
+	private void setVisited(boolean visited, boolean changeReturn) {
+		this.visited = visited;
+		if(visited)
+			distance = 0;
+		else
+			distance = realDistance;
+		
+		if(changeReturn && returnArc != null)
+			returnArc.setVisited(visited, false);
 	}
 }
