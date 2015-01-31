@@ -11,8 +11,8 @@ public class Test {
 		System.out.println("The graph has " + g.getNumberOfVertices() + " vertices.");
 		System.out.println("The graph has " + g.getNumberOfArcs() + " arcs.");
 		System.out.println("The MaxTime is " + g.getMaxTimeAllowed() + ".");
-		System.out.println("The number of cars is " + g.getNumberOfCars() + ".");
-		System.out.println(g.getRoot().getOutgoingArcs());
+		System.out.println("The number of cars is " + g.getNumberOfCars() + ".");		
+		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");	
 	}
 
 }

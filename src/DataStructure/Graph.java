@@ -13,6 +13,7 @@ public class Graph {
 	private int numberOfArcs;
 	private int maxTimeAllowed;
 	private int numberOfCars;
+	private int completeLength;
 	
 	public Graph() {
 
@@ -21,7 +22,8 @@ public class Graph {
 	public void buildFromFile(String path) {
 		Map<Integer,Vertex> vertices = new HashMap<Integer,Vertex>();
 		
-		int intOfRoot = -1;		
+		int intOfRoot = -1;	
+		int completeDistance = 0;
 		Scanner sc = null;
 		
 		try {
@@ -65,6 +67,8 @@ public class Graph {
 				int duration = Integer.parseInt(split[3]);
 				int distance = Integer.parseInt(split[4]);
 				
+				completeDistance += distance;
+				
 				Vertex start = vertices.get(new Integer(intOfStart));
 				Vertex end = vertices.get(new Integer(intOfEnd));
 				
@@ -87,7 +91,9 @@ public class Graph {
 		}		
 		
 		//Do not forget root
-		root = vertices.get(new Integer(intOfRoot));		
+		root = vertices.get(new Integer(intOfRoot));	
+		
+		completeLength = completeDistance;
 	}
 	
 	
@@ -110,4 +116,9 @@ public class Graph {
 	public int getMaxTimeAllowed(){
 		return maxTimeAllowed;
 	}
+	
+	public int getCompleteLength(){
+		return completeLength;
+	}
 }
+
