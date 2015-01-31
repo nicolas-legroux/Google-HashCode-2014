@@ -15,27 +15,47 @@ public class Test {
 		System.out.println("The number of cars is " + g.getNumberOfCars() + ".");		
 		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");
 		
-		int total = 0;
 		
-		for(int i = 0; i < 1000; i++) {
-			Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 1);
-			SolutionsSet set = greedy.compute();
-			g.resetAllDistance();
-			total += set.getTotalScore();
+		SolutionsSet goodCars = new SolutionsSet();
+		
+		for(int j = 0; j < g.getNumberOfCars(); j++) {
+			int best = 0;
+			
+			g.saveState();
+			
+			
+			for(int i = 0; i < 50000; i++) {
+				Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 1);
+				SolutionsSet set = greedy.compute();
+				
+				if(set.getTotalScore() > best) {
+					best = set.getTotalScore();
+				}
+				
+				g.restoreState();
+			}
+			
+			System.out.println("Best " + j + " : " + best);
+			
+			
+			while(true){
+				Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 1);
+				SolutionsSet set = greedy.compute();
+				
+	
+				if(set.getTotalScore() > best) {
+					goodCars.addSolution(set.getFirstSolution());
+					break;
+				}
+				
+				g.restoreState();
+			}
+			
+			System.out.println("Car " + j + " done");
 		}
 		
-		System.out.println("Total of the totals : " + total);
-		
-		g.resetAllDistance();
-		
-		
-		for(int i = 0; i < 10; i++) {
-			Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), g.getNumberOfCars());
-			SolutionsSet set = greedy.compute();
-			System.out.println("Total :" + set.getTotalScore());
-			set.writeToFile();
-			g.resetAllDistance();
-		}
+		goodCars.writeToFile();
+
 	}
 
 }

@@ -27,6 +27,10 @@ public class SolutionsSet {
 		return total;
 	}
 	
+	public Solution getFirstSolution() {
+		return solutions.get(0);
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {

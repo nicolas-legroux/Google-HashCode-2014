@@ -101,10 +101,15 @@ public class Graph {
 		completeLength = completeDistance;
 	}
 	
-	public void resetAllDistance() {
+	public void restoreState() {
 		for(Arc arc : arcs)
-			arc.resetDistance();
+			arc.restoreState();
 	}	
+	
+	public void saveState() {
+		for(Arc arc : arcs)
+			arc.saveState();
+	}
 	
 	public Vertex getRoot() {
 		return root;

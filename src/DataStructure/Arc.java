@@ -5,25 +5,26 @@ public class Arc {
 	private Vertex start;
 	private Vertex end;
 	
-	private int distance;
-	private int realDistance;
 	private int duration;
+	private int realDistance;
+	
+	ArcState currentState;
+	ArcState savedState;
+
 	
 	private Arc returnArc;
 	
 	private int numberOfVisits;
-	
-	private boolean visited;
-	
+		
 	public Arc(Vertex start, Vertex end, int distance, int duration) {
 		this.start = start;
 		this.end = end;
-		this.distance = distance;
 		this.realDistance = distance;
 		this.duration = duration;
 		this.returnArc = null;
-		this.visited = false;
 		this.numberOfVisits = 0;
+		currentState = new ArcState(distance, false);
+		savedState = currentState.clone();
 	}	
 	
 	public void setReturnArc(Arc returnArc) {
@@ -39,7 +40,7 @@ public class Arc {
 	}
 	
 	public int getDistance() {
-		return distance;
+		return currentState.getDistance();
 	}
 	
 	public int getDuration() {
@@ -47,15 +48,19 @@ public class Arc {
 	}
 	
 	public boolean getVisited() {
-		return visited;
+		return currentState.getVisited();
 	}
 	
 	public int getNumberOfVisits() {
 		return numberOfVisits;
 	}
 	
-	public void resetDistance() {
-		distance = realDistance;
+	public void restoreState() {
+		currentState = savedState.clone();
+	}
+	
+	public void saveState() {
+		savedState = currentState.clone();
 	}
 	
 	public void setVisited(boolean visited) {
@@ -64,13 +69,13 @@ public class Arc {
 	
 	private void setVisited(boolean visited, boolean changeReturn) {
 
-		this.visited = visited;
+		currentState.setVisited(visited);
 		if(visited) {
-			distance = 0;
+			currentState.setDistance(0);
 			numberOfVisits++;
 		}
 		else{
-			distance = realDistance;
+			currentState.setDistance(realDistance);
 			numberOfVisits = 0;
 		}
 		
