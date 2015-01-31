@@ -24,7 +24,7 @@ public class Greedy {
 	}
 	
 	public void compute() {
-		Vertex current = graph.getRoot();
+		
 		Arc arc = null;
 		
 
@@ -35,23 +35,23 @@ public class Greedy {
 		
 		for(int i = 0; i < numberVehicules; i++) {
 			
-			Solution solution = new Solution();
+			Solution solution = new Solution(graph.getRoot());
+			Vertex current = graph.getRoot();
 			
 			while(solution.getTotalTime() <= maxTime) {
 				currentOutgoing = current.getOutgoingArcs();
 				Collections.sort(currentOutgoing, comparator);
 				arc = currentOutgoing.get(0);
 				
-				solution.addArc(arc);
+				solution.addVertex(arc, arc.getEnd());
 				arc.setVisited(true);
 				current = arc.getEnd();
 			}
 			
+			System.out.println("Done vehicule " + i);
+			
 			set.addSolution(solution);
 		}
-		
-		
-		System.out.println("Done");
 	}
 
 }

@@ -31,10 +31,9 @@ public class SolutionsSet {
 				writer.println(vs.size());
 				
 				for(Vertex v : vs) {
-					writer.println(v.getClass());
+					writer.println(v.getId());
 				}
 			}
-			writer.println("The second line");
 			writer.close();
 			
 			
