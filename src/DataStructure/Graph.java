@@ -39,8 +39,7 @@ public class Graph {
 			maxTimeAllowed = Integer.parseInt(split[2]);
 			numberOfCars = Integer.parseInt(split[3]);
 			intOfRoot = Integer.parseInt(split[4]);
-			System.out.println(intOfRoot);
-			
+						
 			//Read the lines describing the set of vertices
 			for(int i=0; i<numberOfVertices; i++){
 				String line = sc.nextLine();
@@ -80,8 +79,7 @@ public class Graph {
 				}
 				
 				//Add the arc to the outgoing arcs of the starting vertex
-				start.addOutgoingArc(arc);
-				
+				start.addOutgoingArc(arc);				
 				if(bidirectionnal){
 					end.addOutgoingArc(returnArc);					
 				}
