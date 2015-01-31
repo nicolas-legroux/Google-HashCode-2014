@@ -12,18 +12,13 @@ public class Arc {
 	
 	boolean visited;
 	
-	public Arc(Vertex start, Vertex end, int distance, int duration, boolean bidirectionnel) {
+	public Arc(Vertex start, Vertex end, int distance, int duration) {
 		this.start = start;
 		this.end = end;
 		this.distance = distance;
 		this.duration = duration;
 		returnArc = null;
-	}
-	
-	public Arc(Vertex start, Vertex end, int distance, int duration, boolean bidirectionnel, Arc returnArc) {
-		this(start, end, distance, duration, bidirectionnel);
-		returnArc = null;
-	}
+	}	
 	
 	public void setReturnArc(Arc returnArc) {
 		this.returnArc = returnArc;
@@ -37,10 +32,6 @@ public class Arc {
 		return duration;
 	}
 
-	public void setVisited(boolean visited) {
-		this.visited = visited;
-	}
-	
 	public void setVisited(boolean visited, boolean changeReturn) {
 		this.visited = visited;
 		
