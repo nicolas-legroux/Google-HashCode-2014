@@ -14,8 +14,11 @@
 #include <stdio.h>
 
 class Route {
-    
-    
+private:
+    int id;
+public:
+    Route();
+
 };
 
 #endif /* defined(__Hashcode_2014__Route__) */

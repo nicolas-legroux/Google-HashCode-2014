@@ -32,6 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="DataStructure/Arc.cpp" />
+		<Unit filename="DataStructure/Arc.h" />
+		<Unit filename="DataStructure/Route.cpp" />
+		<Unit filename="DataStructure/Route.h" />
+		<Unit filename="DataStructure/Vertex.cpp" />
+		<Unit filename="DataStructure/Vertex.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
