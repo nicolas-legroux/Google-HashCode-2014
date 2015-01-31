@@ -60,12 +60,8 @@ public class Graph {
 				int intOfEnd = Integer.parseInt(split[1]);
 				boolean bidirectionnal = false;
 				if(split[2].equals("2")){
-					bidirectionnal = true;
-					System.out.println("bidirectionnal");
-				}
-				else{
-					System.out.println("not bidirectionnal");
-				}
+					bidirectionnal = true;					
+				}		
 				
 				int duration = Integer.parseInt(split[3]);
 				int distance = Integer.parseInt(split[4]);
