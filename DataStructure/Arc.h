@@ -16,19 +16,19 @@
 
 
 class Arc {
-    
+
 private:
     Vertex& start;
     Vertex& end;
     int duration;
     int distance;
-    
+    bool bidirectional;
     bool visited;
     vector<int> routes;
     int firstRoute;
 public:
-    Arc(Vertex& start, Vertex& end, int duration, int distance);
-    
+    Arc(Vertex& _start, Vertex& _end, int _duration, int _distance, bool _bidirectional);
+
 };
 
 #endif /* defined(__Hashcode_2014__Arc__) */

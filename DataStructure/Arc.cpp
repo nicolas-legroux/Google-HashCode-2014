@@ -9,7 +9,9 @@
 #include "Arc.h"
 
 
-Arc::Arc(Vertex& _start, Vertex& _end, int _duration, int _distance) : start(_start), end(_end), duration(_duration), distance(_distance), routes(vector<int>())  {
+Arc::Arc(Vertex& _start, Vertex& _end, int _duration, int _distance, bool _bidirectional) :
+        start(_start), end(_end), duration(_duration),
+        distance(_distance), routes(vector<int>()), bidirectional(_bidirectional)  {
     visited = false;
     firstRoute = UNDEFINED_ROUTE;
 }
