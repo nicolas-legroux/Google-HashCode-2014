@@ -30,3 +30,9 @@
 #Codeblocks files
 *.depend
 *.layout
+*.cbp
+
+#Eclipse 
+.cproject
+.project
+.settings
