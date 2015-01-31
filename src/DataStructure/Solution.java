@@ -3,6 +3,9 @@ package DataStructure;
 import java.util.LinkedList;
 import java.util.List;
 
+
+//NOT THREAD SAFE
+
 public class Solution {
 	
 	private List<Vertex> vertices;
@@ -21,8 +24,12 @@ public class Solution {
 	public void addVertex(Arc arc, Vertex v) {
 		arcs.add(arc);
 		vertices.add(v);
+		totaldistance += arc.getDistance();
 		totaltime += arc.getDuration();
-		totaltime += arc.getDuration();
+	}
+	
+	public List<Vertex> getVertices() {
+		return vertices;
 	}
 	
 	public int getTotalTime() {

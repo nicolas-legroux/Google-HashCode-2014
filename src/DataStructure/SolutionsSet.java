@@ -26,7 +26,13 @@ public class SolutionsSet {
 			writer.println(solutions.size());
 			
 			for(Solution s : solutions) {
-				List<Arc> arcs
+				List<Vertex> vs = s.getVertices();
+				
+				writer.println(vs.size());
+				
+				for(Vertex v : vs) {
+					writer.println(v.getClass());
+				}
 			}
 			writer.println("The second line");
 			writer.close();
