@@ -2,29 +2,31 @@ package DataStructure;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 public class Graph {
 	
 	private Vertex root;
-	private int numberOfVertices;
-	private int numberOfArcs;
 	private int maxTimeAllowed;
 	private int numberOfCars;
 	private int completeLength;
 	private List<Arc> arcs;
+	public Map<Integer, Vertex> vertices;
 	
 	public Graph() {
+		vertices = new HashMap<Integer, Vertex>();
 		arcs = new LinkedList<Arc>();
 	}
 	
-	public void buildFromFile(String path) {
-		Map<Integer,Vertex> vertices = new HashMap<Integer,Vertex>();
-		
+	public void buildFromFile(String path) {		
 		int intOfRoot = -1;	
 		int completeDistance = 0;
 		Scanner sc = null;
@@ -39,8 +41,8 @@ public class Graph {
 			//Read the first line of the file
 			String firstLine = sc.nextLine();
 			String[] split = firstLine.split(" ");
-			numberOfVertices = Integer.parseInt(split[0]);
-			numberOfArcs = Integer.parseInt(split[1]);
+			int numberOfVertices = Integer.parseInt(split[0]);
+			int numberOfArcs = Integer.parseInt(split[1]);
 			maxTimeAllowed = Integer.parseInt(split[2]);
 			numberOfCars = Integer.parseInt(split[3]);
 			intOfRoot = Integer.parseInt(split[4]);
@@ -101,6 +103,7 @@ public class Graph {
 		completeLength = completeDistance;
 	}
 	
+		
 	public void resetAllDistance() {
 		for(Arc arc : arcs)
 			arc.resetDistance();
@@ -108,14 +111,6 @@ public class Graph {
 	
 	public Vertex getRoot() {
 		return root;
-	}
-	
-	public int getNumberOfVertices(){
-		return numberOfVertices;
-	}
-	
-	public int getNumberOfArcs(){
-		return numberOfArcs;		
 	}
 	
 	public int getNumberOfCars(){
@@ -128,6 +123,80 @@ public class Graph {
 	
 	public int getCompleteLength(){
 		return completeLength;
+	}
+	
+	private Arc getArcBetweenVertices(Vertex start, Vertex end){
+		for(Arc arc : start.getOutgoingArcs()){
+			if (arc.getEnd() == end)
+				return arc;
+		}
+		return null;
+	}
+	
+	private Vertex getNextClosestVertex(Collection<Vertex> unvisitedVertices, Map<Vertex, Integer> distancesFromSource){
+		Vertex bestVertex = null;
+		int minDistance = Integer.MAX_VALUE;
+		
+		for(Vertex vertex : unvisitedVertices){			
+			if(distancesFromSource.get(vertex) < minDistance){
+				bestVertex = vertex;
+				minDistance = distancesFromSource.get(vertex);
+			}
+		}
+		
+		return bestVertex;
+	}
+	
+	public Solution computeShortestPath(Vertex startingVertex, Vertex endingVertex){
+		Map<Vertex, Vertex> previousVertex = new HashMap<Vertex, Vertex>();
+		Collection<Vertex> unvisitedVertices = vertices.values();
+		Map<Vertex, Integer> distanceFromSource = new HashMap<Vertex, Integer>();
+		
+		distanceFromSource.put(startingVertex, 0);
+		previousVertex.put(startingVertex, null);
+		
+		for(Vertex v : vertices.values()){
+			if(v != startingVertex){
+				previousVertex.put(v, null);
+				distanceFromSource.put(v, Integer.MAX_VALUE);
+			}
+		}
+		
+		while(!unvisitedVertices.isEmpty()){
+			Vertex u = getNextClosestVertex(unvisitedVertices, distanceFromSource);
+			
+			if(u == endingVertex){
+				break;
+			}
+			
+			unvisitedVertices.remove(u);
+			
+			for(Arc arc : u.getOutgoingArcs()){
+				Vertex neighbor = arc.getEnd();
+				int altDistance = distanceFromSource.get(u) + arc.getDuration();
+				if(altDistance<distanceFromSource.get(neighbor)){
+					previousVertex.put(neighbor, u);
+					distanceFromSource.put(neighbor, altDistance);
+				}
+			}
+		}
+		
+		List<Vertex> route = new LinkedList<Vertex>();
+		Vertex v = endingVertex;
+		while(v != null){
+			route.add(v);
+			v = previousVertex.get(v);
+		}
+		
+		Collections.reverse(route);		
+		
+		Solution solution = new Solution(route.get(0));
+		
+		for(int i=1; i<route.size(); i++){
+			solution.addVertex(getArcBetweenVertices(route.get(i-1), route.get(i)), route.get(i));
+		}	
+		
+		return solution;
 	}
 }
 
