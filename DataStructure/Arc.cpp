@@ -9,8 +9,7 @@
 #include "Arc.h"
 
 
-Arc::Arc(Vertex& _start, Vertex& _end, int _duration, int _distance) : start(_start), end(_end), duration(_duration), distance(_distance) {
+Arc::Arc(Vertex& _start, Vertex& _end, int _duration, int _distance) : start(_start), end(_end), duration(_duration), distance(_distance), routes(vector<int>())  {
     visited = false;
-    routes = vector<Route&>();
     firstRoute = UNDEFINED_ROUTE;
 }
