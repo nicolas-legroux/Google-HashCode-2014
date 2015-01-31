@@ -12,9 +12,6 @@
 #include "Route.h"
 #define __Hashcode_2014__Arc__
 
-
-
-
 class Arc {
 
 private:
