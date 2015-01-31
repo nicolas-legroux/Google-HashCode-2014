@@ -18,4 +18,9 @@ public class Vertex {
 	public void addArc(Arc arc) {
 		arcs.add(arc);
 	}
+	
+	public List<Arc> getArcs() {
+		return arcs;
+		
+	}
 }
