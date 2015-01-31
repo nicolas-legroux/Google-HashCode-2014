@@ -12,8 +12,7 @@ public class Solution {
 	private List<Arc> arcs;
 	
 	private int totaltime = 0;
-	private int totaldistance = 0;
-	
+	private int totaldistance = 0;	
 	
 	public Solution(Vertex start) {
 		arcs = new LinkedList<Arc>();
