@@ -14,10 +14,20 @@ public class Solution {
 	private int totaltime = 0;
 	private int totaldistance = 0;	
 	
+	private int id;
+	
 	public Solution(Vertex start) {
 		arcs = new LinkedList<Arc>();
 		vertices = new LinkedList<Vertex>();
 		vertices.add(start);
+		id=-1;
+	}
+	
+	public Solution(Vertex start, int i){
+		arcs = new LinkedList<Arc>();
+		vertices = new LinkedList<Vertex>();
+		vertices.add(start);
+		id = i;
 	}
 	
 	public void addVertex(Arc arc, Vertex v) {
@@ -38,6 +48,10 @@ public class Solution {
 	
 	public int getTotalDistance() {
 		return totaldistance;
+	}
+	
+	public int getId(){
+		return id;
 	}
 	
 	public Vertex getLastVertex(){

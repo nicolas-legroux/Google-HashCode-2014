@@ -1,6 +1,7 @@
 import java.util.Comparator;
 
 import solver.Greedy;
+import solver.LocalArea;
 import ArcComparator.ArcLongestDistanceComparator;
 import ArcComparator.ArcSpeedComparator;
 import DataStructure.*;
@@ -20,16 +21,23 @@ public class Test {
 		Comparator<Arc> comparator = new ArcSpeedComparator();
 
 		SolutionsSet set = null;
-		Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 8, comparator);
+		LocalArea localArea = new LocalArea(g, g.getMaxTimeAllowed(), 8, comparator, 10000.0);
 		
 		
 		long sum = 0;
 		int N = 1;
+<<<<<<< HEAD
+				
+		for(int i=0; i<N; i++){		
+			set = localArea.compute(StartingPoints.lat, StartingPoints.lng);			
+			//set = greedy.compute();
+=======
 		
 		
 		for(int i=0; i<N; i++){		
 			set = greedy.compute(StartingPoints.lat, StartingPoints.lng);			
 			set = greedy.compute();
+>>>>>>> master
 			int totalOfTotal = set.getTotalScore();
 			sum += totalOfTotal;
 			System.out.println(totalOfTotal);
@@ -39,6 +47,7 @@ public class Test {
 		set.writeToFile();
 		
 		System.out.println("Avg : " + sum/N);
-		//set.writeToFile();			
+		set.printDistanceOfEachSolution();
+		set.writeSolutionToFile(7);		
 	}
 }
