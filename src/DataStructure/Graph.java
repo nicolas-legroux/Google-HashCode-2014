@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import Helpers.GeographicDistances;
+
 public class Graph {
 	
 	private Vertex root;
@@ -51,8 +53,8 @@ public class Graph {
 			for(int i=0; i<numberOfVertices; i++){
 				String line = sc.nextLine();
 				split = line.split(" ");
-				float lat = Float.parseFloat(split[0]);
-				float lng = Float.parseFloat(split[1]);
+				double lat = Double.parseDouble(split[0]);
+				double lng = Double.parseDouble(split[1]);
 				Vertex v = new Vertex(lat, lng, i);
 				vertices.put(new Integer(i), v);				
 			}
@@ -197,6 +199,21 @@ public class Graph {
 		}	
 		
 		return solution;
+	}
+	
+	public Vertex findClosestVertexToPoint(double lat, double lng){
+		double minDistance = 10000.0;
+		Vertex point = new Vertex(lat, lng, -1);
+		Vertex closestVertex = null;
+		
+		for(Vertex v : vertices.values()){
+			if(GeographicDistances.distance(v, point) < minDistance){
+				closestVertex = v;
+				minDistance = GeographicDistances.distance(v, point);				
+			}
+		}
+		
+		return closestVertex;		
 	}
 }
 

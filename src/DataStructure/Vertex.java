@@ -5,13 +5,13 @@ import java.util.List;
 
 public class Vertex {
 
-	private float lat;
-	private float lng;
+	private double lat;
+	private double lng;
 	private int id;
 	
 	private List<Arc> outgoingArcs;
 	
-	public Vertex(float lat, float lng, int id) {
+	public Vertex(double lat, double lng, int id) {
 		this.lat = lat;
 		this.lng = lng;
 		this.id = id;
@@ -28,5 +28,13 @@ public class Vertex {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public double getLat(){
+		return lat;
+	}
+	
+	public double getLng(){
+		return lng;
 	}
 }

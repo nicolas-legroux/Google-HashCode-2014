@@ -1,6 +1,7 @@
 import solver.Greedy;
 import DataStructure.*;
 
+
 public class Test {
 
 	public static void main(String[] args) {
@@ -12,8 +13,10 @@ public class Test {
 		System.out.println("The number of cars is " + g.getNumberOfCars() + ".");		
 		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");
 		
+		
 		SolutionsSet solSet = new SolutionsSet();
-		solSet.addSolution(g.computeShortestPath(g.getRoot(), g.vertices.get(1)));
+		Solution sol = g.computeShortestPath(g.getRoot(), g.findClosestVertexToPoint(48.841486, 2.307888));
+		solSet.addSolution(sol);
 		solSet.writeToFile();
 	}
 
