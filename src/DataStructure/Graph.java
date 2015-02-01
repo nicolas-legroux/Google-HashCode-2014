@@ -2,6 +2,7 @@ package DataStructure;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -21,17 +22,15 @@ public class Graph {
 	private int numberOfCars;
 	private int completeLength;
 	private List<Arc> arcs;
-	public Map<Integer, Vertex> vertices;
+	public Vertex[] vertices;
 	
 	//To store the result of Dijkstr'as algorithm
-	private Map<Vertex, Vertex> previousVertex;
+	private int[] previousVertex;
 	private Vertex dijkstraStartingVertex;
 	
 	
-	public Graph() {
-		vertices = new HashMap<Integer, Vertex>();
-		arcs = new LinkedList<Arc>();
-		
+	public Graph() {		
+		arcs = new LinkedList<Arc>();		
 		previousVertex = null;
 		dijkstraStartingVertex = null;
 	}
@@ -56,6 +55,8 @@ public class Graph {
 			maxTimeAllowed = Integer.parseInt(split[2]);
 			numberOfCars = Integer.parseInt(split[3]);
 			intOfRoot = Integer.parseInt(split[4]);
+			
+			vertices = new Vertex[numberOfVertices];
 						
 			//Read the lines describing the set of vertices
 			for(int i=0; i<numberOfVertices; i++){
@@ -63,8 +64,8 @@ public class Graph {
 				split = line.split(" ");
 				double lat = Double.parseDouble(split[0]);
 				double lng = Double.parseDouble(split[1]);
-				Vertex v = new Vertex(lat, lng, i);
-				vertices.put(new Integer(i), v);				
+				Vertex v = new Vertex(lat, lng, i);				
+				vertices[i] = v;
 			}
 			
 			//Read the lines describing the set of arcs
@@ -84,8 +85,8 @@ public class Graph {
 				
 				completeDistance += distance;
 				
-				Vertex start = vertices.get(new Integer(intOfStart));
-				Vertex end = vertices.get(new Integer(intOfEnd));
+				Vertex start = vertices[intOfStart];
+				Vertex end = vertices[intOfEnd];
 				
 				Arc arc = new Arc(start, end, distance, duration);
 				Arc returnArc = null;
@@ -108,7 +109,7 @@ public class Graph {
 		}		
 		
 		//Do not forget root
-		root = vertices.get(new Integer(intOfRoot));	
+		root = vertices[intOfRoot];	
 		
 		completeLength = completeDistance;
 	}
@@ -143,14 +144,14 @@ public class Graph {
 		return null;
 	}
 	
-	private Vertex getNextClosestVertex(Collection<Vertex> unvisitedVertices, Map<Vertex, Integer> distancesFromSource){
+	private Vertex getNextClosestVertex(Collection<Vertex> unvisitedVertices, int[] distancesFromSource){
 		Vertex bestVertex = null;
 		int minDistance = Integer.MAX_VALUE;
 		
 		for(Vertex vertex : unvisitedVertices){			
-			if(distancesFromSource.get(vertex) < minDistance){
+			if(distancesFromSource[vertex.getId()] < minDistance){
 				bestVertex = vertex;
-				minDistance = distancesFromSource.get(vertex);
+				minDistance = distancesFromSource[vertex.getId()];
 			}
 		}
 		
@@ -161,35 +162,34 @@ public class Graph {
 		
 		//Compute if the result is not stored
 		if(previousVertex == null || dijkstraStartingVertex != startingVertex){
-			previousVertex = new HashMap<Vertex, Vertex>();
-			Set<Vertex> unvisitedVertices = new HashSet<Vertex>(vertices.values());
-			Map<Vertex, Integer> distanceFromSource = new HashMap<Vertex, Integer>();
+			System.out.println("Computing Dijkstra Algorithm...");
+			previousVertex = new int[vertices.length];
+			System.out.println(vertices.length);
+			Set<Vertex> unvisitedVertices = new HashSet<Vertex>(Arrays.asList(vertices));
+			int[] distanceFromSource = new int[vertices.length];
 			
-			distanceFromSource.put(startingVertex, 0);
-			previousVertex.put(startingVertex, null);
+			distanceFromSource[startingVertex.getId()] = 0;
 			
-			for(Vertex v : vertices.values()){
+			previousVertex[startingVertex.getId()] = -1;
+			
+			for(Vertex v : Arrays.asList(vertices)){
 				if(v != startingVertex){
-					previousVertex.put(v, null);
-					distanceFromSource.put(v, Integer.MAX_VALUE);
+					previousVertex[v.getId()] = -1;
+					distanceFromSource[v.getId()] = Integer.MAX_VALUE;
 				}
 			}
 			
 			while(!unvisitedVertices.isEmpty()){
 				Vertex u = getNextClosestVertex(unvisitedVertices, distanceFromSource);
 				
-				if(u == endingVertex){
-					break;
-				}
-				
 				unvisitedVertices.remove(u);
 				
 				for(Arc arc : u.getOutgoingArcs()){
 					Vertex neighbor = arc.getEnd();
-					int altDistance = distanceFromSource.get(u) + arc.getDuration();
-					if(altDistance<distanceFromSource.get(neighbor)){
-						previousVertex.put(neighbor, u);
-						distanceFromSource.put(neighbor, altDistance);
+					int altDistance = distanceFromSource[u.getId()] + arc.getDuration();
+					if(altDistance<distanceFromSource[neighbor.getId()]){
+						previousVertex[neighbor.getId()] = u.getId();
+						distanceFromSource[neighbor.getId()] = altDistance;
 					}
 				}
 			}
@@ -200,10 +200,13 @@ public class Graph {
 		
 		//Get the route		
 		List<Vertex> route = new LinkedList<Vertex>();
-		Vertex v = endingVertex;
-		while(v != null){
-			route.add(v);
-			v = previousVertex.get(v);
+		Vertex currentVertex = endingVertex;
+		int idOfCurrentVertex = endingVertex.getId();
+		while(idOfCurrentVertex  != -1){
+			route.add(currentVertex);
+			idOfCurrentVertex = previousVertex[idOfCurrentVertex];
+			if(idOfCurrentVertex != -1)
+				currentVertex = vertices[idOfCurrentVertex];
 		}
 		
 		Collections.reverse(route);	
@@ -216,7 +219,7 @@ public class Graph {
 		Vertex point = new Vertex(lat, lng, -1);
 		Vertex closestVertex = null;
 		
-		for(Vertex v : vertices.values()){
+		for(Vertex v : Arrays.asList(vertices)){
 			if(GeographicDistances.distance(v, point) < minDistance){
 				closestVertex = v;
 				minDistance = GeographicDistances.distance(v, point);				
