@@ -31,6 +31,37 @@ public class SolutionsSet {
 		return solutions;
 	}
 	
+	public void printDistanceOfEachSolution(){
+		for(int i=0; i<solutions.size(); i++){
+			System.out.println("Solution #" + i + " achieved a score of " + solutions.get(i).getTotalDistance());
+		}
+	}
+	
+	public void writeSolutionToFile(int i){
+		Solution s = solutions.get(i);
+		PrintWriter writer;
+		try {
+			
+			writer = new PrintWriter("output.txt", "UTF-8");
+			writer.println(1);
+			
+			List<Vertex> vs = s.getVertices();
+				
+			writer.println(vs.size());
+				
+			for(Vertex v : vs) {
+				writer.println(v.getId());
+			}
+			
+			writer.close();			
+			
+		} catch (FileNotFoundException e) {
+			System.err.println("Could not open file : " + e.getMessage());
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}		
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {
