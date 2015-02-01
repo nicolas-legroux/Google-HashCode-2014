@@ -39,8 +39,11 @@ public class Greedy {
 		return compute(set);
 	}
 	
-	private Arc chooseArc(Solution solution, Vertex current){
-		Arc nextArc = null;		
+	private List<Arc> chooseArcs(Solution solution, Vertex current){
+
+		List<Arc> nextarcs;
+		
+		
 		List<Arc> currentOutgoing = current.getOutgoingArcs();
 		
 		List<Arc> currentOutgoingNotVisited = new LinkedList<Arc>();
@@ -54,21 +57,24 @@ public class Greedy {
 		//Choose the best arc among the set
 		if(!currentOutgoingNotVisited.isEmpty()){
 			Collections.sort(currentOutgoingNotVisited, comparator);
-			nextArc = currentOutgoingNotVisited.get(0);
+			nextarcs = Collections.singletonList(currentOutgoingNotVisited.get(0));
 		}
 		
 		//Else all the arcs are visited
-		//Choose a random arc
+		//Go to the nearest unvisited arc
 		//TODO - is there a better choice?
 		else{
-			Random random = new Random();
-			nextArc = currentOutgoing.get(random.nextInt(currentOutgoing.size()));
+			nextarcs = pathToNearestUnvisitedArc(current);
 		}
 		
-		if(solution.getTotalTime() + nextArc.getDuration() >= maxTime)
+		int newTotal = solution.getTotalTime();
+		for(Arc arc : nextarcs)
+			newTotal += arc.getDuration();
+		
+		if(newTotal >= maxTime)
 			return null;
 		else		
-			return nextArc;
+			return nextarcs;
 	}
 	
 	public SolutionsSet compute(SolutionsSet set) {		
@@ -76,14 +82,21 @@ public class Greedy {
 		for(Solution solution: set.getSolutions()) {			
 			Vertex current = solution.getLastVertex();				
 			while(true) {				
-				Arc nextArc = chooseArc(solution, current);
-				if(nextArc == null)
+				List<Arc> nextArcs = chooseArcs(solution, current);
+				if(nextArcs == null)
 					break;
 				
-				solution.addVertex(nextArc, nextArc.getEnd());				
-				//TODO compute should not be the method that calls setVisited!
-				nextArc.setVisited(true);				
-				current = nextArc.getEnd();				
+				Arc lastArc = null;
+				for(Arc arc : nextArcs) {
+					solution.addVertex(arc, arc.getEnd());		
+					lastArc = arc;
+				}
+				
+				if(lastArc == null)
+					break;
+				
+				
+				current = lastArc.getEnd();				
 			}
 		}		
 		return set;
@@ -125,5 +138,21 @@ public class Greedy {
 		}
 		
 		return set;
+	}
+	
+	private List<Arc> pathToNearestUnvisitedArc(Vertex from){
+		
+		List<Arc> arcs = new LinkedList<Arc>();
+		
+		Arc arc = null;	
+		
+		List<Vertex> shortestPath = graph.pathToNearestUnvisitedArc(from);
+		
+		for(int j=1; j<shortestPath.size(); j++){
+			arc = graph.getArcBetweenVertices(shortestPath.get(j-1), shortestPath.get(j));
+			arcs.add(arc);
+		}
+	
+		return arcs;
 	}
 }

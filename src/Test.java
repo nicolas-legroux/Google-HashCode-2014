@@ -24,7 +24,7 @@ public class Test {
 		
 		
 		long sum = 0;
-		int N = 100;
+		int N = 1;
 		
 		
 		for(int i=0; i<N; i++){		
@@ -35,6 +35,8 @@ public class Test {
 			System.out.println(totalOfTotal);
 			g.resetAllDistance();
 		}
+		
+		set.writeToFile();
 		
 		System.out.println("Avg : " + sum/N);
 		//set.writeToFile();			
