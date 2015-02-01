@@ -46,7 +46,7 @@ public class Arc {
 		return duration;
 	}
 	
-	public boolean getVisited() {
+	public boolean isVisited() {
 		return visited;
 	}
 	
