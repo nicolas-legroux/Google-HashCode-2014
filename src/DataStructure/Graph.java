@@ -23,9 +23,17 @@ public class Graph {
 	private List<Arc> arcs;
 	public Map<Integer, Vertex> vertices;
 	
+	//To store the result of Dijkstr'as algorithm
+	private Map<Vertex, Vertex> previousVertex;
+	private Vertex dijkstraStartingVertex;
+	
+	
 	public Graph() {
 		vertices = new HashMap<Integer, Vertex>();
 		arcs = new LinkedList<Arc>();
+		
+		previousVertex = null;
+		dijkstraStartingVertex = null;
 	}
 	
 	public void buildFromFile(String path) {		
@@ -150,39 +158,47 @@ public class Graph {
 	}
 	
 	public List<Vertex> computeShortestPath(Vertex startingVertex, Vertex endingVertex){
-		Map<Vertex, Vertex> previousVertex = new HashMap<Vertex, Vertex>();
-		Set<Vertex> unvisitedVertices = new HashSet<Vertex>(vertices.values());
-		Map<Vertex, Integer> distanceFromSource = new HashMap<Vertex, Integer>();
 		
-		distanceFromSource.put(startingVertex, 0);
-		previousVertex.put(startingVertex, null);
-		
-		for(Vertex v : vertices.values()){
-			if(v != startingVertex){
-				previousVertex.put(v, null);
-				distanceFromSource.put(v, Integer.MAX_VALUE);
-			}
-		}
-		
-		while(!unvisitedVertices.isEmpty()){
-			Vertex u = getNextClosestVertex(unvisitedVertices, distanceFromSource);
+		//Compute if the result is not stored
+		if(previousVertex == null || dijkstraStartingVertex != startingVertex){
+			previousVertex = new HashMap<Vertex, Vertex>();
+			Set<Vertex> unvisitedVertices = new HashSet<Vertex>(vertices.values());
+			Map<Vertex, Integer> distanceFromSource = new HashMap<Vertex, Integer>();
 			
-			if(u == endingVertex){
-				break;
-			}
+			distanceFromSource.put(startingVertex, 0);
+			previousVertex.put(startingVertex, null);
 			
-			unvisitedVertices.remove(u);
-			
-			for(Arc arc : u.getOutgoingArcs()){
-				Vertex neighbor = arc.getEnd();
-				int altDistance = distanceFromSource.get(u) + arc.getDuration();
-				if(altDistance<distanceFromSource.get(neighbor)){
-					previousVertex.put(neighbor, u);
-					distanceFromSource.put(neighbor, altDistance);
+			for(Vertex v : vertices.values()){
+				if(v != startingVertex){
+					previousVertex.put(v, null);
+					distanceFromSource.put(v, Integer.MAX_VALUE);
 				}
 			}
+			
+			while(!unvisitedVertices.isEmpty()){
+				Vertex u = getNextClosestVertex(unvisitedVertices, distanceFromSource);
+				
+				if(u == endingVertex){
+					break;
+				}
+				
+				unvisitedVertices.remove(u);
+				
+				for(Arc arc : u.getOutgoingArcs()){
+					Vertex neighbor = arc.getEnd();
+					int altDistance = distanceFromSource.get(u) + arc.getDuration();
+					if(altDistance<distanceFromSource.get(neighbor)){
+						previousVertex.put(neighbor, u);
+						distanceFromSource.put(neighbor, altDistance);
+					}
+				}
+			}
+			
+			//Store the starting vertex
+			dijkstraStartingVertex = startingVertex;			
 		}
 		
+		//Get the route		
 		List<Vertex> route = new LinkedList<Vertex>();
 		Vertex v = endingVertex;
 		while(v != null){
@@ -193,16 +209,6 @@ public class Graph {
 		Collections.reverse(route);	
 		
 		return route;
-		
-		/*
-		Solution solution = new Solution(route.get(0));
-		
-		for(int i=1; i<route.size(); i++){
-			solution.addVertex(getArcBetweenVertices(route.get(i-1), route.get(i)), route.get(i));
-		}	
-		
-		return solution;
-		*/
 	}
 	
 	public Vertex findClosestVertexToPoint(double lat, double lng){

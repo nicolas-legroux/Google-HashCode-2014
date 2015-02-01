@@ -72,7 +72,7 @@ public class Greedy {
 	}
 	
 	private SolutionsSet getShortestPathToPoints(double[] initialLat, double[] initialLng){
-		if(initialLat.length != initialLng.length || initialLng.length != numberVehicules){
+		if(initialLat.length != initialLng.length || initialLng.length < numberVehicules){
 			throw new IllegalArgumentException("The size of the arrays must match the number of vehicles");
 		}
 		
