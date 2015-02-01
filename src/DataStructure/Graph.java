@@ -127,7 +127,7 @@ public class Graph {
 		return completeLength;
 	}
 	
-	private Arc getArcBetweenVertices(Vertex start, Vertex end){
+	public Arc getArcBetweenVertices(Vertex start, Vertex end){
 		for(Arc arc : start.getOutgoingArcs()){
 			if (arc.getEnd() == end)
 				return arc;
@@ -149,9 +149,9 @@ public class Graph {
 		return bestVertex;
 	}
 	
-	public Solution computeShortestPath(Vertex startingVertex, Vertex endingVertex){
+	public List<Vertex> computeShortestPath(Vertex startingVertex, Vertex endingVertex){
 		Map<Vertex, Vertex> previousVertex = new HashMap<Vertex, Vertex>();
-		Collection<Vertex> unvisitedVertices = vertices.values();
+		Set<Vertex> unvisitedVertices = new HashSet<Vertex>(vertices.values());
 		Map<Vertex, Integer> distanceFromSource = new HashMap<Vertex, Integer>();
 		
 		distanceFromSource.put(startingVertex, 0);
@@ -190,8 +190,11 @@ public class Graph {
 			v = previousVertex.get(v);
 		}
 		
-		Collections.reverse(route);		
+		Collections.reverse(route);	
 		
+		return route;
+		
+		/*
 		Solution solution = new Solution(route.get(0));
 		
 		for(int i=1; i<route.size(); i++){
@@ -199,6 +202,7 @@ public class Graph {
 		}	
 		
 		return solution;
+		*/
 	}
 	
 	public Vertex findClosestVertexToPoint(double lat, double lng){
