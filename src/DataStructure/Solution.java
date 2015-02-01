@@ -25,6 +25,7 @@ public class Solution {
 		vertices.add(v);
 		totaldistance += arc.getDistance();
 		totaltime += arc.getDuration();
+		arc.setVisited(true);
 	}
 	
 	public List<Vertex> getVertices() {

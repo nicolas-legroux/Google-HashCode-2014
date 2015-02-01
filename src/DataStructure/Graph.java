@@ -214,6 +214,80 @@ public class Graph {
 		return route;
 	}
 	
+	public List<Vertex> pathToNearestUnvisitedArc(Vertex startingVertex){
+		
+		//WARNING
+		//unvisited references here to the dijkstra algo
+		//not the cars
+		
+		//Compute if the result is not stored
+		if(previousVertex == null || dijkstraStartingVertex != startingVertex){
+			System.out.println("Finding nearest unvisited arc...");
+			previousVertex = new int[vertices.length]; // Should be adapted
+
+			Set<Vertex> unvisitedVertices = new HashSet<Vertex>(Arrays.asList(vertices));
+			int[] distanceFromSource = new int[vertices.length];
+			
+			distanceFromSource[startingVertex.getId()] = 0;
+			
+			previousVertex[startingVertex.getId()] = -1;
+			
+			for(Vertex v : Arrays.asList(vertices)){
+				if(v != startingVertex){
+					previousVertex[v.getId()] = -1;
+					distanceFromSource[v.getId()] = Integer.MAX_VALUE;
+				}
+			}
+			
+			
+			
+			while(!unvisitedVertices.isEmpty()){
+				Vertex u = getNextClosestVertex(unvisitedVertices, distanceFromSource);
+				
+				unvisitedVertices.remove(u);
+				
+				for(Arc arc : u.getOutgoingArcs()){
+					Vertex neighbor = arc.getEnd();
+					
+				
+					
+					if(!arc.getVisited()) {
+						
+						List<Vertex> route = new LinkedList<Vertex>();
+						Vertex currentVertex = arc.getStart();
+						int idOfCurrentVertex = currentVertex.getId();
+						while(idOfCurrentVertex  != -1){
+							route.add(currentVertex);
+							idOfCurrentVertex = previousVertex[idOfCurrentVertex];
+							if(idOfCurrentVertex != -1)
+								currentVertex = vertices[idOfCurrentVertex];
+						}
+						
+						Collections.reverse(route);	
+						
+						System.out.println("Need " + route.size() + " to return on a unseen route");
+						return route;
+					}
+					
+					int altDistance = distanceFromSource[u.getId()] + arc.getDuration();
+					if(altDistance<distanceFromSource[neighbor.getId()]){
+						previousVertex[neighbor.getId()] = u.getId();
+						distanceFromSource[neighbor.getId()] = altDistance;
+					}
+					
+				}
+			}
+			
+			//Store the starting vertex
+			dijkstraStartingVertex = startingVertex;			
+		}
+		
+		//Champagne if this ever executed
+		System.out.println("And then, there was light.");
+		return new LinkedList<Vertex>();
+	}
+	
+	
 	public Vertex findClosestVertexToPoint(double lat, double lng){
 		double minDistance = 10000.0;
 		Vertex point = new Vertex(lat, lng, -1);
