@@ -62,7 +62,7 @@ public class LocalArea {
 		if(!currentOutgoingPotential.isEmpty()){
 			List<Arc> currentOutgoingNotVisited = new LinkedList<Arc>();
 			for(Arc arc : currentOutgoingPotential){
-				if (!arc.getVisited()){
+				if (!arc.isVisited()){
 					currentOutgoingNotVisited.add(arc);
 				}
 			}

@@ -86,6 +86,9 @@ public class Greedy {
 					lastArc = arc;
 				}
 				
+				if(lastArc == null)
+					break;
+				
 				current = lastArc.getEnd();				
 			}
 		}		
