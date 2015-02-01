@@ -27,6 +27,10 @@ public class SolutionsSet {
 		return total;
 	}
 	
+	public List<Solution> getSolutions(){
+		return solutions;
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {

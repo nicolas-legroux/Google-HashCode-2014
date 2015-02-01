@@ -1,6 +1,6 @@
 package Helpers;
 
-public final class StartingPointsDivisionAlgorithm {
+public final class StartingPoints {
 	
 	public static double[] lat = {48.848085, 48.873157, 48.878802, 48.880495, 48.844131, 48.860284, 
 		48.840968, 48.846956};

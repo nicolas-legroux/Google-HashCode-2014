@@ -38,4 +38,8 @@ public class Solution {
 	public int getTotalDistance() {
 		return totaldistance;
 	}
+	
+	public Vertex getLastVertex(){
+		return vertices.get(vertices.size()-1);
+	}
 }

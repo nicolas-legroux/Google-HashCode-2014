@@ -1,6 +1,6 @@
 import solver.Greedy;
-import solver.GreedyWithIntelligentStartingPoint;
 import DataStructure.*;
+import Helpers.StartingPoints;
 
 public class Test {
 
@@ -14,8 +14,8 @@ public class Test {
 		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");	
 
 		SolutionsSet set = null;
-		GreedyWithIntelligentStartingPoint greedy = new GreedyWithIntelligentStartingPoint(g, g.getMaxTimeAllowed(), 8);
-		set = greedy.compute();		
+		Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 8);
+		set = greedy.compute(StartingPoints.lat, StartingPoints.lng);		
 		
 		int totalOfTotal = set.getTotalScore();
 		System.out.println(totalOfTotal);			
