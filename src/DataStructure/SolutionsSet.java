@@ -31,6 +31,10 @@ public class SolutionsSet {
 		return solutions.get(0);
 	}
 	
+	public List<Solution> getSolutions() {
+		return solutions;
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {

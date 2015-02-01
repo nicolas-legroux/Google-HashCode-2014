@@ -11,11 +11,14 @@ public class Vertex {
 	
 	private List<Arc> outgoingArcs;
 	
+	private List<SolutionArcNode> solutions;
+	
 	public Vertex(float lat, float lng, int id) {
 		this.lat = lat;
 		this.lng = lng;
 		this.id = id;
 		this.outgoingArcs = new LinkedList<Arc>();
+		this.solutions = new LinkedList<SolutionArcNode>();
 	}
 	
 	public void addOutgoingArc(Arc arc) {
@@ -28,5 +31,13 @@ public class Vertex {
 	
 	public int getId() {
 		return id;
+	}
+	
+	public void addNodeSolution(SolutionArcNode s) {
+		solutions.add(s);
+	}
+	
+	public List<SolutionArcNode> getArcSolutions() {
+		return solutions;
 	}
 }

@@ -1,4 +1,5 @@
 import solver.Greedy;
+import solver.LocalSearch;
 import DataStructure.*;
 
 
@@ -15,47 +16,17 @@ public class Test {
 		System.out.println("The number of cars is " + g.getNumberOfCars() + ".");		
 		System.out.println("The sum the lengths of the arcs is " + g.getCompleteLength() + ".");
 		
+		SolutionsSet set = null;
 		
-		SolutionsSet goodCars = new SolutionsSet();
-		
-		for(int j = 0; j < g.getNumberOfCars(); j++) {
-			int best = 0;
-			
-			g.saveState();
-			
-			
-			for(int i = 0; i < 50000; i++) {
-				Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 1);
-				SolutionsSet set = greedy.compute();
-				
-				if(set.getTotalScore() > best) {
-					best = set.getTotalScore();
-				}
-				
-				g.restoreState();
-			}
-			
-			System.out.println("Best " + j + " : " + best);
-			
-			
-			while(true){
-				Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 1);
-				SolutionsSet set = greedy.compute();
-				
-	
-				if(set.getTotalScore() > best) {
-					goodCars.addSolution(set.getFirstSolution());
-					break;
-				}
-				
-				g.restoreState();
-			}
-			
-			System.out.println("Car " + j + " done");
+		for(int i = 0; i < 1; i++) {
+			Greedy greedy = new Greedy(g, g.getMaxTimeAllowed(), 100);
+			set = greedy.compute();
 		}
+		System.out.println("Total score : " + set.getTotalScore());
 		
-		goodCars.writeToFile();
-
+		LocalSearch ls = new LocalSearch(set, g);
+		ls.computeSwitch();
+		
 	}
 
 }

@@ -53,7 +53,6 @@ public class Greedy {
 				
 				if(solution.getTotalTime() + arc.getDuration() >= maxTime) 
 					break;
-				
 				solution.addVertex(arc, arc.getEnd());
 				arc.setVisited(true);
 				current = arc.getEnd();
