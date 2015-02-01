@@ -56,6 +56,7 @@ public class Arc {
 	
 	public void resetDistance() {
 		distance = realDistance;
+		visited = false;
 	}
 	
 	public void setVisited(boolean visited) {
