@@ -32,11 +32,13 @@ public class SolutionsSet {
 	}
 	
 	public void printDistanceOfEachSolution(){
-		for(int i=0; i<solutions.size(); i++){
-			System.out.println("Solution #" + i + " achieved a score of " + solutions.get(i).getTotalDistance());
-		}
-		
+		System.out.println("****************************************");
+		System.out.println("*************** BILAN *****************");
 		System.out.println("Total Score : " + getTotalScore());
+		for(int i=0; i<solutions.size(); i++){
+			System.out.println("	Car #" + i + " got a score of " + solutions.get(i).getTotalDistance() + " in time " + solutions.get(i).getTotalTime());
+		}	
+		System.out.println("****************************************");
 	}
 	
 	public void writeSolutionToFile(int i){
@@ -92,8 +94,7 @@ public class SolutionsSet {
 					writer.println(v.getId());
 				}
 			}
-			writer.close();
-			
+			writer.close();			
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("Could not open file : " + e.getMessage());

@@ -21,24 +21,26 @@ public class Test {
 				+ g.getCompleteLength() + ".");
 		
 		Comparator<Arc> comparator = new ArcSpeedComparator();
+		boolean iterative = false;
 		
 		SolutionsSet set = null;
 		
-		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedInGivenArea(100000);
+		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedInGivenArea(10000);
 		ComputeSolutions computeSolutions = new ComputeSolutions(g, g.getMaxTimeAllowed(), g.getNumberOfCars(), comparator, chooseArcsAlgorithm);
 				
 		long sum = 0;
-		int N = 1;
+		int N = 10;
 		
 		for (int i = 0; i < N; i++) {
-			set = computeSolutions.compute(StartingPoints.lat, StartingPoints.lng);
-			//set = greedy.compute();
+			set = computeSolutions.compute(StartingPoints.lat, StartingPoints.lng, iterative);
+			//set = computeSolutions.compute();
 			int totalOfTotal = set.getTotalScore();
 			sum += totalOfTotal;
 			g.resetAllDistance();
+			System.out.println(set.getTotalScore());	
 		}		
 		
-		set.printDistanceOfEachSolution();		
+		
 		
 		set.writeToFile();
 	}
