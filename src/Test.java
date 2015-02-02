@@ -24,7 +24,7 @@ public class Test {
 		
 		SolutionsSet set = null;
 		
-		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedInGivenArea(1000);
+		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedGreedy();
 		ComputeSolutions computeSolutions = new ComputeSolutions(g, g.getMaxTimeAllowed(), g.getNumberOfCars(), comparator, chooseArcsAlgorithm);
 				
 		long sum = 0;
