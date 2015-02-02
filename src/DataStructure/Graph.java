@@ -287,6 +287,65 @@ public class Graph {
 		return new LinkedList<Vertex>();
 	}
 	
+	//Try to find arc surrounded by visited arc before going too far
+	
+	public List<Arc> findNeighborArcLost(Vertex startingVertex){
+		
+		boolean lost = true;
+		
+		List<Arc> ls = new LinkedList<Arc>();
+		
+		for(Arc a1 : startingVertex.getOutgoingArcs()) {
+			
+			if(!a1.getVisited())
+				continue;
+			
+			Vertex n1 = a1.getEnd();
+			
+			for(Arc a2 : n1.getOutgoingArcs()) {
+				Vertex n2 = a2.getEnd();
+				
+				
+				if(!a2.getVisited()) {
+					lost = true;
+					for(Arc a3 : n2.getOutgoingArcs()) {
+						if(!a3.getVisited()) {
+							lost = false;
+							break; }
+					}
+					if(lost) {
+						ls.add(a1);
+						ls.add(a2);
+						return ls;
+					}
+				}
+				
+				
+				for(Arc a3 : n2.getOutgoingArcs()) {
+					Vertex n3 = a3.getEnd();
+					
+					if(!a3.getVisited()) {
+						lost = true;
+						
+						for(Arc a4 : n3.getOutgoingArcs()) {
+							if(!a4.getVisited()) {
+								lost = false;
+								break; }
+						}
+						if(lost) {
+							ls.add(a1);
+							ls.add(a2);
+							ls.add(a3);
+							return ls;
+						}
+					}
+				}
+			}
+		}
+		
+		return null;
+	}
+	
 	
 	public Vertex findClosestVertexToPoint(double lat, double lng){
 		double minDistance = 10000.0;

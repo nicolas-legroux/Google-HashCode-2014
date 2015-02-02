@@ -20,6 +20,9 @@ public class Greedy {
 	int maxTime;
 	int numberVehicules;
 	
+	static int totalChoose = 0;
+	static int lost = 0;
+	
 	Comparator<Arc> comparator;
 	
 	public Greedy(Graph graph, int maxTime, int numberVehicules, Comparator<Arc> comp) {
@@ -41,32 +44,40 @@ public class Greedy {
 	
 	private List<Arc> chooseArcs(Solution solution, Vertex current){
 
-		List<Arc> nextarcs;
+		List<Arc> nextarcs = null;
 		
+		totalChoose++;
+		//nextarcs = graph.findNeighborArcLost(current);
+		if(nextarcs != null) {
+			lost++;
+			float r = (float)lost/(float)totalChoose;
+			System.out.println("LOST ONE, ratio : " + r);
+			
+		} else {
 		
-		List<Arc> currentOutgoing = current.getOutgoingArcs();
-		
-		List<Arc> currentOutgoingNotVisited = new LinkedList<Arc>();
-		for(Arc arc : currentOutgoing){
-			if (!arc.getVisited()){
-				currentOutgoingNotVisited.add(arc);
+			List<Arc> currentOutgoing = current.getOutgoingArcs();
+			
+			List<Arc> currentOutgoingNotVisited = new LinkedList<Arc>();
+			for(Arc arc : currentOutgoing){
+				if (!arc.getVisited()){
+					currentOutgoingNotVisited.add(arc);
+				}
+			}
+			
+			//The set of outgoing arcs contains arcs that are not visited
+			//Choose the best arc among the set
+			if(!currentOutgoingNotVisited.isEmpty()){
+				Collections.sort(currentOutgoingNotVisited, comparator);
+				nextarcs = Collections.singletonList(currentOutgoingNotVisited.get(0));
+			}
+			
+			//Else all the arcs are visited
+			//Go to the nearest unvisited arc
+			//TODO - is there a better choice?
+			else{
+				nextarcs = pathToNearestUnvisitedArc(current);
 			}
 		}
-		
-		//The set of outgoing arcs contains arcs that are not visited
-		//Choose the best arc among the set
-		if(!currentOutgoingNotVisited.isEmpty()){
-			Collections.sort(currentOutgoingNotVisited, comparator);
-			nextarcs = Collections.singletonList(currentOutgoingNotVisited.get(0));
-		}
-		
-		//Else all the arcs are visited
-		//Go to the nearest unvisited arc
-		//TODO - is there a better choice?
-		else{
-			nextarcs = pathToNearestUnvisitedArc(current);
-		}
-		
 		int newTotal = solution.getTotalTime();
 		for(Arc arc : nextarcs)
 			newTotal += arc.getDuration();

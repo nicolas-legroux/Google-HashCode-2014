@@ -8,6 +8,6 @@ public class ArcLongestDistanceComparator implements Comparator<Arc> {
 	@Override
 	//Get the arc with the longest distance
 	public int compare(Arc o1, Arc o2) {
-		return  o2.getDistance() - o1.getDistance();		
+		return  -1 * (o2.getDistance() - o1.getDistance());		
 	}
 }
