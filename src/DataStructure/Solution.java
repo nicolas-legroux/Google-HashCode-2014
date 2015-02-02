@@ -16,6 +16,9 @@ public class Solution {
 	
 	private int id;
 	
+	private double latStart;
+	private double lngStart;
+	
 	public Solution(Vertex start, int i){
 		arcs = new LinkedList<Arc>();
 		vertices = new LinkedList<Vertex>();
@@ -50,4 +53,17 @@ public class Solution {
 	public Vertex getLastVertex(){
 		return vertices.get(vertices.size()-1);
 	}
+	
+	public void setStartingPoint(double lat, double lng){
+		this.latStart = lat;
+		this.lngStart = lng;
+	}
+	
+	public double getLatStart(){
+		return latStart;		
+	}
+	
+	public double getLngStart(){
+		return lngStart;
+	}	
 }

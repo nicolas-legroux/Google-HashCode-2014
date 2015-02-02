@@ -26,6 +26,16 @@ public class ComputeSolutions {
 		chooseArcsAlgorithm.initialize(graph, maxTime, comp);
 	}
 	
+	public SolutionsSet compute() {
+		SolutionsSet set = new SolutionsSet();
+		for (int i = 0; i < numberVehicules; ++i) {
+			Solution solution = new Solution(graph.getRoot(), i);
+			set.addSolution(solution);
+		}
+
+		return compute(set);
+	}
+	
 	public SolutionsSet compute(SolutionsSet set) {		
 		
 		for(Solution solution: set.getSolutions()) {			
@@ -72,6 +82,7 @@ public class ComputeSolutions {
 			
 			Solution solution = new Solution(graph.getRoot(), i);
 			Vertex current = graph.getRoot();
+			solution.setStartingPoint(initialLat[i], initialLng[i]);
 				
 			List<Vertex> shortestPath = graph.computeShortestPath(graph.getRoot(), 
 					graph.findClosestVertexToPoint(initialLat[i], initialLng[i]));

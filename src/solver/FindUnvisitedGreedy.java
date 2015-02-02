@@ -19,7 +19,7 @@ public class FindUnvisitedGreedy implements ChooseArcsAlgorithm {
 	public FindUnvisitedGreedy() {
 		this.graph = null;
 		this.maxTime = -1;
-		this.comparator = null;
+		this.comparator = null;		
 	}
 	
 	public void initialize(Graph g, int maxT,  Comparator<Arc> comp){

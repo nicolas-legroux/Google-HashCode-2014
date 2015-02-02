@@ -3,7 +3,7 @@ import java.util.Comparator;
 import solver.ChooseArcsAlgorithm;
 import solver.ComputeSolutions;
 import solver.FindUnvisitedGreedy;
-import solver.LocalArea;
+import solver.FindUnvisitedInGivenArea;
 import ArcComparator.ArcLongestDistanceComparator;
 import ArcComparator.ArcSpeedComparator;
 import DataStructure.*;
@@ -24,7 +24,7 @@ public class Test {
 		
 		SolutionsSet set = null;
 		
-		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedGreedy();
+		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedInGivenArea(1900);
 		ComputeSolutions computeSolutions = new ComputeSolutions(g, g.getMaxTimeAllowed(), g.getNumberOfCars(), comparator, chooseArcsAlgorithm);
 				
 		long sum = 0;

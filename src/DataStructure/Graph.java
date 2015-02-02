@@ -275,6 +275,72 @@ public class Graph {
 		System.out.println("And then, there was light.");
 		return new LinkedList<Vertex>();
 	}
+	 
+	public List<Vertex> pathToNearestUnvisitedArcInArea(Vertex startingVertex, double latStart, double lngStart, double maxD) {
+
+		// WARNING
+		// unvisited references here to the dijkstra algo
+		// not the cars
+
+		// System.out.println("Finding nearest unvisited arc...");
+		previousVertex = new int[vertices.length]; // Should be adapted
+
+		Set<Vertex> unvisitedVertices = new HashSet<Vertex>(
+				Arrays.asList(vertices));
+		int[] distanceFromSource = new int[vertices.length];
+
+		for (Vertex v : Arrays.asList(vertices)) {
+			previousVertex[v.getId()] = -1;
+			distanceFromSource[v.getId()] = Integer.MAX_VALUE;
+		}
+
+		distanceFromSource[startingVertex.getId()] = 0;
+		previousVertex[startingVertex.getId()] = -1;
+
+		while (!unvisitedVertices.isEmpty()) {
+			Vertex u = getNextClosestVertex(unvisitedVertices,
+					distanceFromSource);
+
+			unvisitedVertices.remove(u);
+
+			for (Arc arc : u.getOutgoingArcs()) {
+				Vertex neighbor = arc.getEnd();
+
+				// If the arc is not visited return the route to the arc
+				if (!arc.isVisited()) {
+					
+					if(GeographicDistances.distance(neighbor,
+							new Vertex(latStart, lngStart, -1)) < maxD){
+						List<Vertex> route = new LinkedList<Vertex>();
+						Vertex currentVertex = arc.getStart();
+						int idOfCurrentVertex = currentVertex.getId();
+	
+						while (idOfCurrentVertex != -1) {
+							route.add(currentVertex);
+							idOfCurrentVertex = previousVertex[idOfCurrentVertex];
+							if (idOfCurrentVertex != -1)
+								currentVertex = vertices[idOfCurrentVertex];
+						}
+	
+						Collections.reverse(route);
+						//System.out.println("Need " + route.size()	+ " to return on a unseen route");
+						return route;
+					}
+				}
+
+				int altDistance = distanceFromSource[u.getId()]
+						+ arc.getDuration();
+				if (altDistance < distanceFromSource[neighbor.getId()]) {
+					previousVertex[neighbor.getId()] = u.getId();
+					distanceFromSource[neighbor.getId()] = altDistance;
+				}
+			}
+		}
+
+		// Champagne if this ever executed
+		System.out.println("And then, there was light.");
+		return new LinkedList<Vertex>();
+	}
 
 	public Vertex findClosestVertexToPoint(double lat, double lng) {
 		double minDistance = 10000.0;
