@@ -31,12 +31,11 @@ public class Test {
 			//set = greedy.compute();
 			int totalOfTotal = set.getTotalScore();
 			sum += totalOfTotal;
-			System.out.println(totalOfTotal);
 			g.resetAllDistance();
-		}
+		}		
+		
+		set.printDistanceOfEachSolution();		
 		
 		set.writeToFile();
-		System.out.println("Avg : " + sum / N);
-		// set.writeToFile();
 	}
 }

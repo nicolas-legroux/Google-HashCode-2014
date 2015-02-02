@@ -26,8 +26,8 @@ public class Greedy {
 	
 	public SolutionsSet compute(){
 		SolutionsSet set = new SolutionsSet();
-		for(int i=0; i<numberVehicules; ++i){
-			Solution solution = new Solution(graph.getRoot());
+		for(int i=0; i<numberVehicules; i++){
+			Solution solution = new Solution(graph.getRoot(), i);
 			set.addSolution(solution);
 		}
 		
@@ -111,7 +111,7 @@ public class Greedy {
 		
 		for(int i = 0; i < numberVehicules; i++) {
 			
-			Solution solution = new Solution(graph.getRoot());
+			Solution solution = new Solution(graph.getRoot(), i);
 			Vertex current = graph.getRoot();
 				
 			List<Vertex> shortestPath = graph.computeShortestPath(graph.getRoot(), 

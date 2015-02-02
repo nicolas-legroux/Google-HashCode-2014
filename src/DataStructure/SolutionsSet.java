@@ -35,6 +35,8 @@ public class SolutionsSet {
 		for(int i=0; i<solutions.size(); i++){
 			System.out.println("Solution #" + i + " achieved a score of " + solutions.get(i).getTotalDistance());
 		}
+		
+		System.out.println("Total Score : " + getTotalScore());
 	}
 	
 	public void writeSolutionToFile(int i){
@@ -42,7 +44,7 @@ public class SolutionsSet {
 		PrintWriter writer;
 		try {
 			
-			writer = new PrintWriter("output.txt", "UTF-8");
+			writer = new PrintWriter("car-" + i + ".txt", "UTF-8");
 			writer.println(1);
 			
 			List<Vertex> vs = s.getVertices();
@@ -70,6 +72,9 @@ public class SolutionsSet {
 			writer.println(solutions.size());
 			
 			for(Solution s : solutions) {
+				
+				writeSolutionToFile(s.getId());
+				
 				List<Vertex> vs = s.getVertices();
 				
 				writer.println(vs.size());

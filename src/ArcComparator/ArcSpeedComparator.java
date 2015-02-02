@@ -16,6 +16,6 @@ public class ArcSpeedComparator implements Comparator<Arc> {
 		
 		//Is negative if speed of o1 is larger than speed of o2
 		//o1 < o2 <==> speed(o1)>speed(o2)
-		return (int)(1000.0*(r1 - r2));
+		return (int)(1000.0*(r2 - r1));
 	}
 }

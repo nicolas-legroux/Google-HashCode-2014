@@ -16,13 +16,6 @@ public class Solution {
 	
 	private int id;
 	
-	public Solution(Vertex start) {
-		arcs = new LinkedList<Arc>();
-		vertices = new LinkedList<Vertex>();
-		vertices.add(start);
-		id=-1;
-	}
-	
 	public Solution(Vertex start, int i){
 		arcs = new LinkedList<Arc>();
 		vertices = new LinkedList<Vertex>();

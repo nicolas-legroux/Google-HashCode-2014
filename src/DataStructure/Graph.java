@@ -258,8 +258,7 @@ public class Graph {
 					}
 
 					Collections.reverse(route);
-					System.out.println("Need " + route.size()
-							+ " to return on a unseen route");
+					//System.out.println("Need " + route.size()	+ " to return on a unseen route");
 					return route;
 				}
 
