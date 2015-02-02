@@ -4,7 +4,7 @@ import solver.ChooseArcsAlgorithm;
 import solver.ComputeSolutions;
 import solver.FindUnvisitedGreedy;
 import solver.FindUnvisitedInGivenArea;
-import ArcComparator.ArcLongestDistanceComparator;
+import ArcComparator.ArcDistanceComparator;
 import ArcComparator.ArcSpeedComparator;
 import DataStructure.*;
 import Helpers.StartingPoints;
