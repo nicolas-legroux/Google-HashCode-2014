@@ -34,14 +34,18 @@ public class ComputeSolutions {
 			set.addSolution(solution);
 		}
 
-		if(iterative)
+		if (iterative)
 			return computeIteratively(set);
 		else
 			return computeCarByCar(set);
 	}
 	
-	public SolutionsSet compute(SolutionsSet set, boolean iterative){
-		if(iterative)
+	private void addArcToSolution(Arc arc, Solution solution){
+		solution.addArc(arc, arc.getEnd());		
+	}
+
+	public SolutionsSet compute(SolutionsSet set, boolean iterative) {
+		if (iterative)
 			return computeIteratively(set);
 		else
 			return computeCarByCar(set);
@@ -66,7 +70,7 @@ public class ComputeSolutions {
 
 					Arc lastArc = null;
 					for (Arc arc : nextArcs) {
-						solution.addVertex(arc, arc.getEnd());
+						addArcToSolution(arc, solution);
 						lastArc = arc;
 					}
 
@@ -81,24 +85,18 @@ public class ComputeSolutions {
 				break;
 			}
 
-			/*
-			 * if(nombre_iteration%100==0){
-			 * System.out.println("------- CURRENT STATE --------");
-			 * for(Solution solution : set.getSolutions()){
-			 * System.out.println("    Car#" + solution.getId() +
-			 * " has a score of " + solution.getTotalDistance() + " in time " +
-			 * solution.getTotalTime()); }
-			 * 
-			 * System.out.println("Total score is " + set.getTotalScore());
-			 * 
-			 * System.out.println("------------------------------"); }
-			 */
+			if (nombre_iteration % 1000 == 0) {
+				set.printStatusOfSolutions();
+			}
+
 		}
 
 		return set;
 	}
 
 	public SolutionsSet computeCarByCar(SolutionsSet set) {
+		
+		int nombre_iteration = 0;
 
 		for (Solution solution : set.getSolutions()) {
 			Vertex current = solution.getLastVertex();
@@ -106,33 +104,36 @@ public class ComputeSolutions {
 				List<Arc> nextArcs = chooseArcsAlgorithm.chooseArcs(solution,
 						current);
 				if (nextArcs == null) {
-					System.out
-							.println("Car #" + solution.getId() + " is done.");
+					solution.setFinished(true);
 					break;
 				}
 
 				Arc lastArc = null;
 				for (Arc arc : nextArcs) {
-					solution.addVertex(arc, arc.getEnd());
+					addArcToSolution(arc, solution);
 					lastArc = arc;
 				}
 
 				if (lastArc == null) {
-					System.out
-							.println("Car #" + solution.getId() + " is done.");
+					System.out.println("WTF HAPPENED");
 					break;
 				}
 
-				current = lastArc.getEnd();
+				current = lastArc.getEnd();	
+				
+				if(nombre_iteration%1000 == 0){
+					//set.printStatusOfSolutions();
+				}
 			}
 		}
 
 		return set;
 	}
 
-	public SolutionsSet compute(double[] initialLat, double[] initialLng, boolean iterative) {
+	public SolutionsSet compute(double[] initialLat, double[] initialLng,
+			boolean iterative) {
 		SolutionsSet set = getShortestPathToPoints(initialLat, initialLng);
-		if(iterative)
+		if (iterative)
 			return computeIteratively(set);
 		else
 			return computeCarByCar(set);
@@ -166,7 +167,7 @@ public class ComputeSolutions {
 				if (solution.getTotalTime() + arc.getDuration() >= maxTime)
 					break;
 
-				solution.addVertex(arc, arc.getEnd());
+				solution.addArc(arc, arc.getEnd());
 				arc.setVisited(true);
 				current = arc.getEnd();
 			}

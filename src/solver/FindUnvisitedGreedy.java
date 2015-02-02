@@ -51,7 +51,9 @@ public class FindUnvisitedGreedy implements ChooseArcsAlgorithm {
 		//Else all the arcs are visited
 		//Go to the nearest unvisited arc
 		//TODO - is there a better choice?
+		
 		else{
+			solution.calledDijkstra();
 			nextArcs = pathToNearestUnvisitedArc(current);
 		}
 		

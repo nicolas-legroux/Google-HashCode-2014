@@ -31,7 +31,20 @@ public class SolutionsSet {
 		return solutions;
 	}
 	
-	public void printDistanceOfEachSolution(){
+	public void printStatusOfSolutions(){
+		System.out.println("------- CURRENT STATE --------");
+		for (Solution solution : solutions) {
+			System.out.println("    Car#" + solution.getId()
+					+ " has a score of " + solution.getTotalDistance()
+					+ " in time " + solution.getTotalTime());
+		}
+
+		System.out.println("Total score is " + getTotalScore());
+
+		System.out.println("------------------------------");
+	}
+	
+	public void printStats(){
 		System.out.println("****************************************");
 		System.out.println("*************** BILAN *****************");
 		System.out.println("Total Score : " + getTotalScore());
@@ -39,6 +52,11 @@ public class SolutionsSet {
 			System.out.println("	Car #" + i + " got a score of " + solutions.get(i).getTotalDistance() + " in time " + solutions.get(i).getTotalTime());
 		}	
 		System.out.println("****************************************");
+		
+		for(int i=0; i<solutions.size(); i++){
+			solutions.get(i).printStats();
+		}
+		
 	}
 	
 	public void writeSolutionToFile(int i){

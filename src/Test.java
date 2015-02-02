@@ -25,11 +25,11 @@ public class Test {
 		
 		SolutionsSet set = null;
 		
-		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedInGivenArea(10000);
+		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedGreedy();
 		ComputeSolutions computeSolutions = new ComputeSolutions(g, g.getMaxTimeAllowed(), g.getNumberOfCars(), comparator, chooseArcsAlgorithm);
 				
 		long sum = 0;
-		int N = 10;
+		int N = 1;
 		
 		for (int i = 0; i < N; i++) {
 			set = computeSolutions.compute(StartingPoints.lat, StartingPoints.lng, iterative);
@@ -37,7 +37,7 @@ public class Test {
 			int totalOfTotal = set.getTotalScore();
 			sum += totalOfTotal;
 			g.resetAllDistance();
-			System.out.println(set.getTotalScore());	
+			set.printStats();
 		}		
 		
 		
