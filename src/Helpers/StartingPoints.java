@@ -5,7 +5,7 @@ public final class StartingPoints {
 	public static double[] lat = {
 		48.873157, 
 		48.848085, 
-		48.878802, 
+		48.884560, 
 		48.880495, 
 		48.844131, 
 		48.860284, 
@@ -16,7 +16,7 @@ public final class StartingPoints {
 	public static double[] lng = {
 		2.298214, 
 		2.274868, 
-		2.339069, 
+		2.329537, 
 		2.390053,			
 		2.310058, 
 		2.359840, 
