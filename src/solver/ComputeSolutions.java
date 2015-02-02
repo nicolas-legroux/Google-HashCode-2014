@@ -36,31 +36,52 @@ public class ComputeSolutions {
 		return compute(set);
 	}
 	
-	public SolutionsSet compute(SolutionsSet set) {		
+	public SolutionsSet compute(SolutionsSet set) {	
 		
-		for(Solution solution: set.getSolutions()) {			
-			Vertex current = solution.getLastVertex();				
-			while(true) {				
-				List<Arc> nextArcs = chooseArcsAlgorithm.chooseArcs(solution, current);
-				if(nextArcs == null){
-					System.out.println("Car #" + solution.getId() + " is done.");
-					break;
+		int nombre_iteration = 0;
+		
+		while(true){
+			
+			for(Solution solution : set.getSolutions()){
+				if(!solution.isFinished()){
+					Vertex current = solution.getLastVertex();	
+					List<Arc> nextArcs = chooseArcsAlgorithm.chooseArcs(solution, current);
+					
+					if(nextArcs == null){
+						System.out.println("Car #" + solution.getId() + " is done with score " + solution.getTotalDistance() + " in time " + solution.getTotalTime());
+						solution.setFinished(true);
+						break;
+					}
+					
+					Arc lastArc = null;
+					for(Arc arc : nextArcs) {
+						solution.addVertex(arc, arc.getEnd());		
+						lastArc = arc;
+					}
+					
+					if(lastArc == null){
+						System.out.println("Car #" + solution.getId() + " is done with score " + solution.getTotalDistance() + " in time " + solution.getTotalTime());
+						solution.setFinished(true);
+						break;
+					}
 				}
-				
-				Arc lastArc = null;
-				for(Arc arc : nextArcs) {
-					solution.addVertex(arc, arc.getEnd());		
-					lastArc = arc;
-				}
-				
-				if(lastArc == null){
-					System.out.println("Car #" + solution.getId() + " is done.");
-					break;
-				}
-				
-				current = lastArc.getEnd();				
 			}
-		}		
+			
+			if(set.allSolutionsAreFinished()){
+				break;
+			}
+			
+			if(nombre_iteration%100==0){
+				System.out.println("------- CURRENT STATE --------");
+				for(Solution solution : set.getSolutions()){
+					System.out.println("    Car#" + solution.getId() + " has a score of " + solution.getTotalDistance() + " in time " + solution.getTotalTime());
+				}
+				
+				System.out.println("Total score is " + set.getTotalScore());
+				
+				System.out.println("------------------------------");
+			}
+		}	
 		
 		return set;
 	}

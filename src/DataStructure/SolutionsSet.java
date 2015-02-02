@@ -64,6 +64,15 @@ public class SolutionsSet {
 		}		
 	}
 	
+	public boolean allSolutionsAreFinished(){
+		for(Solution solution : solutions){
+			if(!solution.isFinished()){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {

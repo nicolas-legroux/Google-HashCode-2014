@@ -90,10 +90,7 @@ public class FindUnvisitedInGivenArea implements ChooseArcsAlgorithm {
 					shortestPath.get(j));
 			arcs.add(arc);
 		}
-
-		if(arcs.isEmpty()){
-			System.out.println("Car #" + s.getId() + " finished in "  + s.getTotalTime());
-		}
+		
 		return arcs;
 	}
 }

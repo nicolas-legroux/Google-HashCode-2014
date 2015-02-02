@@ -19,11 +19,14 @@ public class Solution {
 	private double latStart;
 	private double lngStart;
 	
+	private boolean finished;
+	
 	public Solution(Vertex start, int i){
 		arcs = new LinkedList<Arc>();
 		vertices = new LinkedList<Vertex>();
 		vertices.add(start);
 		id = i;
+		finished = false;
 	}
 	
 	public void addVertex(Arc arc, Vertex v) {
@@ -48,6 +51,14 @@ public class Solution {
 	
 	public int getId(){
 		return id;
+	}
+	
+	public boolean isFinished(){
+		return finished;
+	}
+	
+	public void setFinished(boolean finish){
+		finished = finish;
 	}
 	
 	public Vertex getLastVertex(){
