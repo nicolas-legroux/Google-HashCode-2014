@@ -6,7 +6,7 @@ import java.util.List;
 import DataStructure.Arc;
 import DataStructure.Graph;
 import DataStructure.Solution;
-import DataStructure.SolutionsSet;
+import DataStructure.SolutionSet;
 import DataStructure.Vertex;
 
 //Class that builds the the set of solutions
@@ -30,8 +30,8 @@ public class ComputeSolutions {
 	
 	//When iterative is set to true : the path for the cars are built at the same time.
 	//Otherwise : the path for each car is built one at a time
-	public SolutionsSet compute(boolean iterative) {
-		SolutionsSet set = new SolutionsSet();
+	public SolutionSet compute(boolean iterative) {
+		SolutionSet set = new SolutionSet();
 		for (int i = 0; i < numberVehicules; ++i) {
 			Solution solution = new Solution(graph.getRoot(), i);
 			set.addSolution(solution);
@@ -47,14 +47,14 @@ public class ComputeSolutions {
 		solution.addArc(arc, arc.getEnd());		
 	}
 
-	public SolutionsSet compute(SolutionsSet set, boolean iterative) {
+	public SolutionSet compute(SolutionSet set, boolean iterative) {
 		if (iterative)
 			return computeIteratively(set);
 		else
 			return computeCarByCar(set);
 	}
 
-	public SolutionsSet computeIteratively(SolutionsSet set) {
+	public SolutionSet computeIteratively(SolutionSet set) {
 
 		int nombre_iteration = 0;
 
@@ -96,7 +96,7 @@ public class ComputeSolutions {
 		return set;
 	}
 
-	public SolutionsSet computeCarByCar(SolutionsSet set) {
+	public SolutionSet computeCarByCar(SolutionSet set) {
 		
 		int nombre_iteration = 0;
 
@@ -131,9 +131,9 @@ public class ComputeSolutions {
 		return set;
 	}
 
-	public SolutionsSet compute(double[] initialLat, double[] initialLng,
+	public SolutionSet compute(double[] initialLat, double[] initialLng,
 			boolean iterative) {
-		SolutionsSet set = getShortestPathToPoints(initialLat, initialLng);
+		SolutionSet set = getShortestPathToPoints(initialLat, initialLng);
 		if (iterative)
 			return computeIteratively(set);
 		else
@@ -141,7 +141,7 @@ public class ComputeSolutions {
 	}
 	
 	//Builds the shortest path to the starting points
-	private SolutionsSet getShortestPathToPoints(double[] initialLat,
+	private SolutionSet getShortestPathToPoints(double[] initialLat,
 			double[] initialLng) {
 		if (initialLat.length != initialLng.length
 				|| initialLng.length < numberVehicules) {
@@ -149,7 +149,7 @@ public class ComputeSolutions {
 					"The size of the arrays must match the number of vehicles");
 		}
 
-		SolutionsSet set = new SolutionsSet();
+		SolutionSet set = new SolutionSet();
 		Arc arc = null;
 
 		for (int i = 0; i < numberVehicules; i++) {

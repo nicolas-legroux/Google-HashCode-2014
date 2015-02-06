@@ -24,7 +24,7 @@ public class Test {
 		Comparator<Arc> comparator = new ArcSpeedComparator();
 		boolean iterative = false;
 
-		SolutionsSet set = null;
+		SolutionSet set = null;
 		ChooseArcsAlgorithm chooseArcsAlgorithm = new GreedyRandom();
 
 		ComputeSolutions computeSolutions = new ComputeSolutions(g,

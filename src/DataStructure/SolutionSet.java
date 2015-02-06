@@ -7,11 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 //Class describing a set of Solutions, ie. routes for multiple cars
-public class SolutionsSet {
+public class SolutionSet {
 	
 	List<Solution> solutions;
 	
-	public SolutionsSet() {
+	public SolutionSet() {
 		solutions = new LinkedList<Solution>();
 	}
 	
