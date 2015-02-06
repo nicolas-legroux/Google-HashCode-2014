@@ -7,9 +7,12 @@ import java.util.List;
 import DataStructure.Arc;
 import DataStructure.Graph;
 import DataStructure.Solution;
-import DataStructure.SolutionsSet;
 import DataStructure.Vertex;
 
+//The tactic is the following : 
+//When starting from the current Vertex :
+//Find an unvisited arc in the outgoing arcs that maximises speed
+//If there is no such arc, go to the nearest unvisited arc
 public class FindUnvisitedGreedy implements ChooseArcsAlgorithm {
 	
 	private Graph graph;

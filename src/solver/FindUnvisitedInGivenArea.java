@@ -4,16 +4,17 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
-
 import DataStructure.Arc;
 import DataStructure.Graph;
 import DataStructure.Solution;
-import DataStructure.SolutionsSet;
 import DataStructure.Vertex;
 import Helpers.GeographicDistances;
-import Helpers.StartingPoints;
 
+//The tactic is the following : 
+//When starting from the current Vertex :
+//Find an unvisited arc in the outgoing arcs that maximises speed
+//If there is no such arc, go to the most advantageous unvisited arc (considers multiple choices with a max depth)
+//Additional constraint : the arcs that are chosen must be in a given area
 public class FindUnvisitedInGivenArea implements ChooseArcsAlgorithm {
 
 	private Graph graph;
@@ -80,20 +81,13 @@ public class FindUnvisitedInGivenArea implements ChooseArcsAlgorithm {
 
 	private List<Arc> pathToNearestUnvisitedArcInArea(Vertex from, Solution s) {
 
-		List<Arc> arcs = new LinkedList<Arc>();
-		Arc arc = null;
-
-		List<Vertex> shortestPath = graph.pathToNearestUnvisitedArcInArea(from, s.getLatStart(), s.getLngStart(), maxDistanceFromStart);
-
-		for (int j = 1; j < shortestPath.size(); j++) {
-			arc = graph.getArcBetweenVertices(shortestPath.get(j - 1),
-					shortestPath.get(j));
-			arcs.add(arc);
-		}
+		int maxDepthSearch = 1;
+		List<Arc> arcs = graph.pathToBestUnvisitedArcInAreaWithDepthSearch(from, s.getLatStart(), s.getLngStart(), maxDistanceFromStart, maxDepthSearch);
 
 		if(arcs.isEmpty()){
 			System.out.println("Car #" + s.getId() + " finished in "  + s.getTotalTime());
 		}
+		
 		return arcs;
 	}
 }

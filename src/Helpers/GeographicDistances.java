@@ -1,6 +1,7 @@
 package Helpers;
 import DataStructure.Vertex;
 
+//Class to perform computations involving latitudes and longitudes given in decimal degrees
 public final class GeographicDistances {
 	
 	private GeographicDistances() {
@@ -14,6 +15,7 @@ public final class GeographicDistances {
 		return (rad * 180 / Math.PI);
 	}
 	
+	//Returns the distance, in meters between two vertices
 	public static double distance(Vertex v1, Vertex v2){
 		double lat1 = v1.getLat();
 		double lon1 = v1.getLng();

@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.LinkedList;
 import java.util.List;
 
+//Class describing a set of Solutions, ie. routes for multiple cars
 public class SolutionsSet {
 	
 	List<Solution> solutions;
@@ -31,12 +32,32 @@ public class SolutionsSet {
 		return solutions;
 	}
 	
-	public void printDistanceOfEachSolution(){
+	public void printStatusOfSolutions(){
+		System.out.println("------- CURRENT STATE --------");
+		for (Solution solution : solutions) {
+			System.out.println("    Car#" + solution.getId()
+					+ " has a score of " + solution.getTotalDistance()
+					+ " in time " + solution.getTotalTime());
+		}
+
+		System.out.println("Total score is " + getTotalScore());
+
+		System.out.println("------------------------------");
+	}
+	
+	public void printStats(){
+		System.out.println("****************************************");
+		System.out.println("*************** BILAN *****************");
+		System.out.println("Total Score : " + getTotalScore());
 		for(int i=0; i<solutions.size(); i++){
-			System.out.println("Solution #" + i + " achieved a score of " + solutions.get(i).getTotalDistance());
+			System.out.println("	Car #" + i + " got a score of " + solutions.get(i).getTotalDistance() + " in time " + solutions.get(i).getTotalTime());
+		}	
+		System.out.println("****************************************");
+		
+		for(int i=0; i<solutions.size(); i++){
+			solutions.get(i).printStats();
 		}
 		
-		System.out.println("Total Score : " + getTotalScore());
 	}
 	
 	public void writeSolutionToFile(int i){
@@ -64,6 +85,15 @@ public class SolutionsSet {
 		}		
 	}
 	
+	public boolean allSolutionsAreFinished(){
+		for(Solution solution : solutions){
+			if(!solution.isFinished()){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public void writeToFile() {
 		PrintWriter writer;
 		try {
@@ -83,8 +113,7 @@ public class SolutionsSet {
 					writer.println(v.getId());
 				}
 			}
-			writer.close();
-			
+			writer.close();			
 			
 		} catch (FileNotFoundException e) {
 			System.err.println("Could not open file : " + e.getMessage());
