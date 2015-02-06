@@ -1,8 +1,10 @@
 import java.util.Comparator;
+
 import solver.ChooseArcsAlgorithm;
 import solver.ComputeSolutions;
 import solver.FindUnvisitedGreedy;
 import solver.FindUnvisitedInGivenArea;
+import solver.GreedyRandom;
 import ArcComparator.ArcDistanceComparator;
 import ArcComparator.ArcSpeedComparator;
 import DataStructure.*;
@@ -23,7 +25,7 @@ public class Test {
 		boolean iterative = false;
 
 		SolutionsSet set = null;
-		ChooseArcsAlgorithm chooseArcsAlgorithm = new FindUnvisitedGreedy();
+		ChooseArcsAlgorithm chooseArcsAlgorithm = new GreedyRandom();
 
 		ComputeSolutions computeSolutions = new ComputeSolutions(g,
 				g.getMaxTimeAllowed(), g.getNumberOfCars(), comparator,
@@ -33,9 +35,8 @@ public class Test {
 		int N = 1;
 
 		for (int i = 0; i < N; i++) {
-			set = computeSolutions.compute(StartingPoints.lat,
-					StartingPoints.lng, iterative);
-			// set = computeSolutions.compute();
+			set = computeSolutions.compute(StartingPoints.lat, StartingPoints.lng, iterative);
+		//	set = computeSolutions.compute(iterative);
 			int totalOfTotal = set.getTotalScore();
 			sum += totalOfTotal;
 
