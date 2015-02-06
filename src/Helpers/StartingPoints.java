@@ -2,6 +2,7 @@ package Helpers;
 
 public final class StartingPoints {
 	
+	//Defines the starting longitudes and latitudes for the eight cars when an area tactic is applied
 	public static double[] lat = {
 		48.873157, 
 		48.848085, 

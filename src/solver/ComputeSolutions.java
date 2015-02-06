@@ -9,6 +9,7 @@ import DataStructure.Solution;
 import DataStructure.SolutionsSet;
 import DataStructure.Vertex;
 
+//Class that builds the the set of solutions
 public class ComputeSolutions {
 
 	Graph graph;
@@ -26,7 +27,9 @@ public class ComputeSolutions {
 
 		chooseArcsAlgorithm.initialize(graph, maxTime, comp);
 	}
-
+	
+	//When iterative is set to true : the path for the cars are built at the same time.
+	//Otherwise : the path for each car is built one at a time
 	public SolutionsSet compute(boolean iterative) {
 		SolutionsSet set = new SolutionsSet();
 		for (int i = 0; i < numberVehicules; ++i) {
@@ -86,9 +89,8 @@ public class ComputeSolutions {
 			}
 
 			if (nombre_iteration % 1000 == 0) {
-				set.printStatusOfSolutions();
+				//set.printStatusOfSolutions();
 			}
-
 		}
 
 		return set;
@@ -114,8 +116,7 @@ public class ComputeSolutions {
 					lastArc = arc;
 				}
 
-				if (lastArc == null) {
-					System.out.println("WTF HAPPENED");
+				if (lastArc == null) {					
 					break;
 				}
 
@@ -138,7 +139,8 @@ public class ComputeSolutions {
 		else
 			return computeCarByCar(set);
 	}
-
+	
+	//Builds the shortest path to the starting points
 	private SolutionsSet getShortestPathToPoints(double[] initialLat,
 			double[] initialLng) {
 		if (initialLat.length != initialLng.length
@@ -177,5 +179,4 @@ public class ComputeSolutions {
 
 		return set;
 	}
-
 }
